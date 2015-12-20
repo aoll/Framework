@@ -1,0 +1,3 @@
+fr_projet_ldap_login:
+    path:	/login_ldap
+    defaults:	{ _controller: FrLdapBundle:Ldap:login }
