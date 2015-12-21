@@ -1,0 +1,19 @@
+{# src/Fr/LdapBundle/Resources/views/Projet/ldap_login.html.twig #}
+
+{% extends "FrLdapBundle::layout.html.twig" %}
+
+{% block title %}
+//{{ 'add roles'|trans }} - {{ parent() }}
+{% endblock %}
+
+{% block frprojet_body %}
+
+  <h2>admin</h2>
+
+
+
+{{ include("FrLdapBundle:Ldap:form.html.twig") }}
+
+ 
+
+{% endblock %}

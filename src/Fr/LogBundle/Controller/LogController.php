@@ -9,7 +9,7 @@ namespace Fr\LogBundle\Controller;
 use Fr\ProjetBundle\Controller\MasterController;
 //use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Fr\ForumBundle\Form\AnswerEditType;
 use Fr\ForumBundle\Form\AnswerType;
 use Fr\ForumBundle\Entity\Answer;

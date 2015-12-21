@@ -41,6 +41,7 @@ home
 	  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') == false  %}
 	  {#<a href="{{ path('fr_projet_login') }}">login</a>#} 
 	  <a href="{{ path('fos_user_security_login') }}">login</a> 
+    <a href="{{ path('fr_projet_ldap_login') }}">login_ldap</a> 
 	  <a href="{{ path('fos_user_registration_register') }}">register</a>
 	  {% endif %}
      {# on affiche le lien :ajouter une annonce que si il a les droits  #}
@@ -52,8 +53,9 @@ home
                  {% endif %} 
 
           {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}     
-	  <a href="{{ path('fr_forum_home') }}">forum</a>
-	  <a href="{{ path('fr_tickets_homepage') }}">Tickets</a>
+	 {# <a href="{{ path('fr_forum_home') }}">forum</a> #}
+    <a href="{{ path('fr_projet_ldap_annuaire') }}">ldap_annuaire</a>
+{#	  <a href="{{ path('fr_tickets_homepage') }}">Tickets</a> #}
 	  <a href="{{ path('fr_projet_profile') }}">profile</a>
 	  <a href="{{ path('fr_projet_logout') }}">logout</a>
 {#	  <a href="{{ path('fos_user_security_logout') }}">logout</a> #}

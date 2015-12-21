@@ -7,6 +7,18 @@ fr_projet_ldap_login:
     path:       /login_ldap
     defaults:   { _controller: FrLdapBundle:Ldap:login }
 
+fr_projet_ldap_logas:
+    path:       /ldap_logas/{login}
+    defaults:   { _controller: FrLdapBundle:Ldap:ldap_logas }
+
+fr_projet_ldap_annuaire:
+    path:       /ldap_annuaire
+    defaults:   { _controller: FrLdapBundle:Ldap:annuaire }
+
+fr_projet_ldap_tof:
+    path:       /ldap_tof
+    defaults:   { _controller: FrLdapBundle:Ldap:tof }
+
 fr_log:
     resource: "@FrLogBundle/Resources/config/routing.yml"
     prefix:   /{_locale}
@@ -66,7 +78,7 @@ fos_user_change_password:
 
 fr_projet_after_login:
     path:	/
-    defaults: { _controller: FrProjetBundle:Projet:login }
+    defaults: { _controller: FrProjetBundle:Projet:index }
 
 fr_projet_register:
     path:       /register/confirmed

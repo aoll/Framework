@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LogasController extends MasterController
 {
@@ -57,8 +58,8 @@ class LogasController extends MasterController
 		$session = $request->getSession();
 		$session->set('admin', $logas->getAdmin());
 
-		
-		return $this->redirect($this->generateUrl('fr_projet_login'));//, array('user' => $user)));
+	return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/en/home');	
+//		return $this->redirect($this->generateUrl('fr_projet_login'));//, array('user' => $user)));
 	
 	}
 	
@@ -83,7 +84,8 @@ class LogasController extends MasterController
 	//	$em->flush();
 		$session->set('admin', null);
 		}
-		return $this->redirect($this->generateUrl('fr_projet_login'));
+		return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/fr/home');
+//		return $this->redirect($this->generateUrl('fr_projet_login'));
 
 	}
 }

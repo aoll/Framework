@@ -18,31 +18,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ProjetController extends MasterController
 {
-/*
-	public function ldapAction()
-	{
-		$ldaprdn = 'uid=aollivie,ou=september,ou=2014,ou=paris,ou=people,dc=42,dc=fr';
-   $ldappass = 'nuB-3xcO';
 
-   $ldapconn = ldap_connect("ldaps://ldap.42.fr", 636)
-          or die("Could not connect to LDAP server.");
-   ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
-
-    if ($ldapconn) {
-            $ldapbind = @ldap_bind($ldapconn, $ldaprdn, $ldappass);
-            if ($ldapbind)
-	       echo "LDAP bind successful...\n"; // Si tu peux bind, c'est que l\
-e couple pass/login est correct, sinon, non..
-            else
-                echo "LDAP bind failed...\n";
-    }
-    ldap_close($ldapconn);
-		return new Response("ok new reponse");	
-	}
-	*/
     public function indexAction(Request $request)
     {
-	$this->addLog();
+	//$this->addLog();
+
         return $this->render('FrProjetBundle:Projet:index.html.twig');
     }
 
@@ -62,12 +42,14 @@ e couple pass/login est correct, sinon, non..
         
 	public function loginAction(Request $request)
 	{
+		$this->addLog('login');
 	$save = $this->container->get('fr_projet.save');
 	
-	$em = $this->getDoctrine()->getManager();
-	$user = $this->container->get('security.context')->getToken()->getUser();
+//	$em = $this->getDoctrine()->getManager();
+//	$user = $this->container->get('security.context')->getToken()->getUser();
 	$save->saveLog($em, $request, $user, 'login');
-
+	//return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/fr/home');
+/*
 	if ($user != 'anon.') {
 			 
 	   if ($user->getLanguage() == 'en') {
@@ -76,6 +58,8 @@ e couple pass/login est correct, sinon, non..
 		      else
 		    return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/fr/home');
 		    }
+		    */
+		     return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/en/home');
 	return $this->render('FrProjetBundle:Projet:index.html.twig');
     	}
 
@@ -111,15 +95,43 @@ e couple pass/login est correct, sinon, non..
     {
 	$this->addLog();
 	$user = $this->container->get('security.context')->getToken()->getUser();
-			
-			if 	($user == 'anon.') {
+	//return new Response("$user");
+	$repository = $this->getDoctrine()
+        ->getManager()
+        ->getRepository('FrUserBundle:User');
+	$user2 = $repository->find($user);
+			if 	($user2 == 'anon.') {
 			
 				      return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/fr/home');
 		}			  
-		if ($user == NULL)
-		{		
-	      return new Response("user null");
-		 }		 
+		
+		if ($user2 == NULL)
+		{
+			$ds = ldap_connect("ldap://ldap.42.fr", 389);
+          	ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+          	$myDn = $this->myDn;
+          	$myPwd = $this->myPwd;
+
+
+          	if ($ds) { 
+            $result = ldap_bind($ds, $myDn, $myPwd);
+
+            $dn = "dc=42, dc=fr";
+            $tmp = $user;
+            $filter="(|(uid=$tmp))";//(givenname=$tmp))";
+            $justthese = array();
+            $sr=@ldap_search($ds, $dn, $filter, $justthese);
+
+            $info = @ldap_get_entries($ds, $sr);
+			//return $this->render('FrProjetBundle:Projet:tof.html.php', array('data' => $info[0]["jpegphoto"][0]));
+            return $this->render('FrProjetBundle:Projet:profile_ldap.html.twig', array('info' => $info[0]));
+	      	//return new Response($info[0]["cn"][0]);
+	  				}
+		}	
+
+
+
+
 	  return $this->render('FrProjetBundle:Projet:profile.html.twig', array('user' => $user));
     }
 
@@ -305,11 +317,13 @@ e couple pass/login est correct, sinon, non..
   	        return new Response($language); }
 		return new Response('vide');
 		*/
-
+		return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/fr/home');
    		$user = $this->container->get('security.context')->getToken()->getUser();
   		// if ($user != null){
    		// return new Response($user);}
   
+  		
+  				return new RedirectResponse('http://localhost:8080/Symfony/web/app_dev.php/fr/home');
 		if ($language == 'fr') {
    		    if ($user != 'anon.') {
       		       $user->setLanguage('fr');

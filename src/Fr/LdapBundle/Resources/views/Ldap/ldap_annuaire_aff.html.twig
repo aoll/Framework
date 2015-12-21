@@ -1,0 +1,29 @@
+{# src/Fr/LdapBundle/Resources/views/Projet/ldap_annuaire.html.twig #}
+
+{% extends "FrLdapBundle::layout.html.twig" %}
+
+{% block title %}
+annuaire
+{% endblock %}
+
+{% block frprojet_body %}
+
+  <h2>annuaire</h2>
+
+ 
+
+ <div class="well">
+   {{ info.cn[0] }}
+  </div>
+   <div class="well">
+    login: {{ info.uid[0] }}
+  </div>
+
+ 
+  <div class="well">
+    mobile: {{ info.mobile[0] }}
+  </div>
+ {% if is_granted('ROLE_SUPER_ADMIN') %}
+ <p> <a href="{{ path('fr_projet_ldap_logas', {'login': info.uid[0]}) }}">log as</a></p>
+{% endif %}
+{% endblock %}

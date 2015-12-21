@@ -15,9 +15,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MasterController extends Controller
 {
-
-
-  public function addLog()
+    protected $myDn = "uid=aollivie,ou=september,ou=2014,ou=paris,ou=people,dc=42,dc=fr";
+    protected $myPwd = "nuB-3xcO";
+    protected $newDn;
+    
+  public function addLog($action = NULL)
     {
         $em = $this->getDoctrine()->getManager();
         $log = new Log();
@@ -28,10 +30,16 @@ class MasterController extends Controller
 	$date = new \DateTime();
 	$log->setDate($date);
 
-	$log->setAction('visited');
+        $log->setAction($action);
 
         $url = $this->container->get('request')->headers->get('referer');
 	$log->setUrl($url);
+
+
+   
+        $log->setAction('visited');
+    if (strstr($url, 'login') !== FALSE)
+        $log->setAction('login');
 
 	$em->persist($log);
         $em->flush();

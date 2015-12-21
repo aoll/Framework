@@ -1,0 +1,27 @@
+{# src/fr/ProjetBundle/Resources/views/Advert/profile_ldap.html.twig #}
+
+{% extends "FrProjetBundle::layout.html.twig" %}
+
+{% block title %}
+ Profile - {{ parent() }}
+{% endblock %}
+
+{% block frprojet_body %}
+
+  <h2>Profile</h2>
+
+
+  <div class="well">
+   {{ info.cn[0] }}
+  </div>
+   <div class="well">
+    login: {{ info.uid[0] }}
+  </div>
+
+  <div class="well">
+    mobile: {{ info.mobile[0] }}
+  </div>
+  
+
+
+{% endblock %}
